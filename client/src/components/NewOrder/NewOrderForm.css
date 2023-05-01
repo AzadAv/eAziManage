@@ -1,0 +1,28 @@
+.new-order-info {
+
+    height: 75vh;
+    width: 450px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.new-order-info .fab {
+
+    position: absolute;
+    top: 2%;
+    left: 90%;
+}
+.new-order-info .input {
+
+    width: 80%;
+    text-align: center;
+    margin: 5px;
+
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    
+}
