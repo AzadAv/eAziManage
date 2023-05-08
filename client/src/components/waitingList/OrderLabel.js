@@ -42,7 +42,6 @@ function OrderLabel() {
   
   return (
     <Box className='orderPdf'>
-        
       <MyDocument />
        <button onClick={save}>Save</button>
     </Box>

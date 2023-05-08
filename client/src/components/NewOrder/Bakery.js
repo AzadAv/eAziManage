@@ -79,7 +79,21 @@ function Bakery(props) {
       enName: 'Pashtidot',
      heName: 'מיני פשטידות',
      type: 'bakery',
-     tags:['bakery']},  
+     tags:['bakery']},
+     {
+      id : 16,
+      nameEn: 'Zucchini balls',
+      nameHe: 'לביבות זוקיני',
+      type: 'bakery',
+      quantity: 1
+  },  
+    {
+      id: 17,
+      nameEn:"Kishes",
+      nameHe:"קישים",
+      type: 'bakery',
+      quantity : 1
+    }
   ]
   return (
     <div className='bakery'>

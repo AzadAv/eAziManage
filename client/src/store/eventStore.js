@@ -1,13 +1,13 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
-  eventName: " ",
-  guestsNum: 51,
-  guestsType: " ",
-  orderDate: "2012-12-12",
-  orderTime: "08:00",
-  menuName: " ",
-  eventType: " ",
+  eventName: "",
+  guestsNum: 50,
+  guestsType: "",
+  orderDate: "2023-12-31",
+  orderTime: "13:00",
+  menuName: "",
+  eventType: null,
   price: 0,
   items: [],
   kitchenItemsAmount: 0,
@@ -58,7 +58,7 @@ export const eventSlice = createSlice({
     // console.log(newArray);
 
     state.items = newArray;
-    console.log(state.items);
+    // console.log(state.items);
 
     // action.payload.map((item)=>{
 

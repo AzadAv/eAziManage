@@ -43,15 +43,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function NewOrder(props) {
   const dispatch = useDispatch();
 
-  const [navbarState, navbarStateHandler] = useState("Drinks");
-  const [backdropState, backdropStateHandler] = useState(true);
+  const [navbarState, navbarStateHandler] = useState("drinks");
+  const [backdropState, backdropStateHandler] = useState(false);
 
   const [orderInputState, orderInputStateHandler] = useState(false);
   const [menuState, menuStateHandler] = useState(false);
   const [priceState, priceStateHandler] = useState(false);
 
   
-  const [commentState,commentStateHandler] = useState(true);
+  const [commentState,commentStateHandler] = useState(false);
   const [commentTopic, commentTopicHandler] = useState();
   const [commentDepartment,commentDepartmentHandler] = useState();
   const [commentDescription,commentDescriptionHandler] = useState();
@@ -90,24 +90,7 @@ function NewOrder(props) {
   const menu = menuState ? (
     <Paper className="components-container" elevation={3}>
       <Box className="menu-header">
-        {/* <Box className="search-bar">
-          <TextField
-            sx={{width:'100%', fontSize:'20px',input: {textAlign: "center"},label: {textAlign: "center"}}}
-            id="standard-search"
-            label={props.language? 'חיפוש' : "Search"}
-            type="search"
-            variant="filled"
-          />
-        </Box> */}
-        {/* <Box className="item-groups">
-        <Stack direction="row" spacing={1}>
-          <Chip variant="outlined" label="סלטים" color="primary" />
-          <Chip variant="outlined" label="ירקות" color="primary" />
-          <Chip variant="outlined" label="פירות" color="primary" />
-          <Chip variant="outlined" label="מוכנים" color="primary" />
-      </Stack>
-        </Box> */}
-        <Navbar language={props.language} navbarState={navbarStateHandler} />
+        <Navbar language={props.language} menuNavbarState={navbarStateHandler} />
         <Fab
           size="small"
           color="info"
@@ -120,10 +103,10 @@ function NewOrder(props) {
         </Fab>
       </Box>
 
-      {navbarState === "Drinks" ? <Drinks language={props.language} /> : ""}
+      {navbarState === "drinks" ? <Drinks language={props.language} /> : ""}
       {navbarState === "Trays" ? <Trays language={props.language} /> : ""}
-      {navbarState === "Kitchen" ? <Kitchen language={props.language} /> : ""}
-      {navbarState === "Bakery" ? <Bakery language={props.language} /> : ""}
+      {navbarState === "kitchen" ? <Kitchen language={props.language} /> : ""}
+      {navbarState === "bakery" ? <Bakery language={props.language} /> : ""}
     </Paper>
   ) : (
     ""

@@ -4,6 +4,14 @@ import { useSelector, connect, useDispatch } from "react-redux";
 import ClassicMorning from "./Menus/MorningClassic";
 import MorningMefanek from "./Menus/MorningMefanek";
 import MorningWealthy from "./Menus/MorningWealthy";
+import AfternoonClassic from "./Menus/AfternoonClassic";
+import AfternoonMefanek from "./Menus/AfternoonMefanek";
+import AfternoonWealthy from "./Menus/AfternoonWealthy";
+import EveningClassic from "./Menus/EveningClassic";
+import EveningMefanek from "./Menus/EveningMefanek";
+import EveningWealthy from "./Menus/EveningWealthy";
+import Empty from "./Menus/Empty";
+
 import Item from "./MenuItem";
 import Comment from "./Comment";
 
@@ -33,38 +41,52 @@ import {
   setMenuName,
   setMenuItems,
 } from "../../store/eventStore";
+import { addEvent } from "../../store/waitingListStore";
+import { addOrder } from "../../store/ordersListStore";
 
 function Cart(props) {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = React.useState(false);
+  const [menuType, menuTypeHandler] = useState(null);
+  const [emptyField, emptyFieldHandler] = useState({
+    name: false,
+    guestsType: false,
+    menuName: false,
+    eventType: false,
+  });
 
   const eventName = useSelector((state) => state.eventStoreReducer.eventName);
   const guestsNum = useSelector((state) => state.eventStoreReducer.guestsNum);
+  const guestsType = useSelector((state) => state.eventStoreReducer.guestsType);
   const price = useSelector((state) => state.eventStoreReducer.price);
   const orderDate = useSelector((state) => state.eventStoreReducer.orderDate);
   const orderTime = useSelector((state) => state.eventStoreReducer.orderTime);
-  const menuName = useSelector((state) => state.eventStoreReducer.menuType);
+  const menuName = useSelector((state) => state.eventStoreReducer.menuName);
+  const eventType = useSelector((state) => state.eventStoreReducer.eventType);
   const menuItems = useSelector((state) => state.eventStoreReducer.items);
   const comments = useSelector((state) => state.eventStoreReducer.comments);
-  // const comments = useSelector
-  const kitchenItemsNum = useSelector(
-    (state) => state.eventStoreReducer.kitchenItemsAmount
+
+  const eventId = useSelector(
+    (state) => state.waitingListStoreReducer.events.length
   );
-  const drinksItemsAmount = useSelector(
-    (state) => state.eventStoreReducer.drinksAmount
+
+  const ordersListId = useSelector(
+    (state) => state.ordersListStoreReducer.orders.length
   );
-  const bakeryItemsAmount = useSelector(
-    (state) => state.eventStoreReducer.bakeriesAmount
-  );
-  const eventType = useSelector((state) => state.eventStoreReducer.eventType);
+
   const drinkItems = menuItems.filter((item) => item.type === "drinks").length;
   const kitchenItems = menuItems.filter(
     (item) => item.type === "kitchen"
   ).length;
   const bakeryItems = menuItems.filter((item) => item.type === "bakery").length;
-  const [menuType, menuTypeHandler] = useState(null);
 
   const menuTypes = [
+    {
+      menuName: "Without Menu",
+      menu: Empty,
+      listValue: "ללא תפריט",
+      price: 0,
+    },
     {
       menuName: "classic morning",
       menu: ClassicMorning,
@@ -85,37 +107,37 @@ function Cart(props) {
     },
     {
       menuName: "classic lunch",
-      menu: ClassicMorning,
+      menu: AfternoonClassic,
       listValue: "צהריים קלאסי",
       price: 80,
     },
     {
       menuName: "mefanek lunch",
-      menu: ClassicMorning,
+      menu: AfternoonMefanek,
       listValue: "צהריים מפנק",
       price: 110,
     },
     {
       menuName: "wealthy lunch",
-      menu: ClassicMorning,
+      menu: AfternoonWealthy,
       listValue: "צהריים עשיר",
       price: 130,
     },
     {
       menuName: "classic evening",
-      menu: ClassicMorning,
+      menu: EveningClassic,
       listValue: "ערב קלאסי",
       price: 60,
     },
     {
       menuName: "mefanek evening",
-      menu: ClassicMorning,
+      menu: EveningMefanek,
       listValue: "ערב מפנק",
       price: 85,
     },
     {
       menuName: "wealthy evening",
-      menu: ClassicMorning,
+      menu: EveningWealthy,
       listValue: "ערב עשיר",
       price: 130,
     },
@@ -129,6 +151,7 @@ function Cart(props) {
     menuTypes.filter((menu) => {
       if (menu.listValue === event.target.value) {
         menuTypeHandler(menu);
+        // emptyFieldHandler({menuName :false});
         dispatch(setMenuName(menu.listValue));
         dispatch(changePrice(guestsNum * menu.menu.pricePerPerson));
         dispatch(setMenuItems(menu.menu.items));
@@ -150,23 +173,117 @@ function Cart(props) {
     dispatch(setMenuItems(temp));
   }
 
-  // console.log(menuItems);
+  function checkInputs() {
+    let emptyName = eventName === "";
+    let emptyGuestsType = guestsType === "";
+    let emptyMenuName = menuName === "";
+    let emptyEventType = eventType === null;
+    let rightFormat = !(
+      emptyName ||
+      emptyGuestsType ||
+      emptyMenuName ||
+      emptyEventType
+    );
+
+    if (rightFormat) {
+      return true;
+    } else {
+      emptyFieldHandler({
+        name: eventName === "",
+        guestsType: guestsType === "",
+        menuName: menuName === "",
+        eventType: eventType === null,
+      });
+
+      console.log(eventName === "");
+      console.log(guestsType === "");
+      console.log(menuName === "");
+      console.log(eventType === null);
+
+      return false;
+    }
+  }
+
+  function sendToWaitingList() {
+    if (checkInputs()) {
+      dispatch(
+        addEvent({
+          id: eventId,
+          eventName: eventName,
+          guestsNum: guestsNum,
+          guestsType: guestsType,
+          orderDate: orderDate,
+          orderTime: orderTime,
+          menuName: menuName,
+          eventType: eventType,
+          price: price,
+          items: menuItems,
+          comments: comments,
+        })
+      );
+      console.log("Successully added to waiting list");
+    } else {
+      console.log("Something went wrong with adding to waiting list");
+    }
+  }
+
+  function sendToOrdersList() {
+    if (checkInputs()) {
+      console.log("Successully added to production list");
+      dispatch(
+        addOrder({
+          id: ordersListId,
+          orderName: eventName,
+          guestsNum: guestsNum,
+          guestsType: guestsType,
+          orderDate: orderDate,
+          orderTime: orderTime,
+          menuName: menuName,
+          eventType: eventType,
+          items: menuItems,
+          comments: comments,
+          ready: false,
+        })
+      );
+    } else {
+      console.log("Something went wrong with adding to production list");
+    }
+  }
+
+  const current = new Date();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = (new Date().getMonth() + 1).toLocaleString();
+  const currentDay = new Date().getDate().toLocaleString();
+
+  const currentDate =
+    currentYear +
+    (currentMonth > 9 ? "-" : "-0") +
+    currentMonth +
+    (currentDay > 9 ? "-" : "-0") +
+    currentDay;
+
   return (
     <Box className="order-cart">
       <Box className="cart-header" elevation={3}>
         <TextField
           className="input"
-          label={props.language ? "שם האירוע" : "Name of Order"}
+          error={emptyField.name}
+          label={props.language ? "שם" : "Name"}
           // inputRef={nameRef}
           variant="outlined"
           required={true}
           defaultValue={eventName}
-          onChange={(event) => dispatch(setName(event.target.value))}
+          onChange={(event) =>
+            dispatch(
+              setName(event.target.value),
+              emptyFieldHandler({ name: false })
+            )
+          }
         />
         <TextField
           className="input"
           id="standard-number"
-          label=" מספר האורחים"
+          label={props.language ? "מספר האורחים" : "Number of Guests"}
           type="number"
           min="50"
           InputProps={{
@@ -182,13 +299,19 @@ function Cart(props) {
         <FormControl className="input">
           <TextField
             select
+            error={emptyField.guestsType}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="סוג הקהל"
+            label={props.language ? "סוג הקהל" : "Type of Guests"}
             SelectProps={{
               renderValue: (value) => value,
             }}
-            onChange={(event) => dispatch(setGuestsType(event.target.value))}
+            onChange={(event) =>
+              dispatch(
+                setGuestsType(event.target.value),
+                emptyFieldHandler({ guestsType: false })
+              )
+            }
           >
             <MenuItem value={"שגררות"}>שגררות</MenuItem>
             <MenuItem value={"חיילים"}>חיילים</MenuItem>
@@ -198,8 +321,12 @@ function Cart(props) {
         <TextField
           className="input"
           type="date"
-          label="תאריך"
+          label={props.language ? "תאריך" : "Date"}
           variant="outlined"
+          inputProps={{
+            min: currentDate,
+            // max: "2020-08-20",
+          }}
           defaultValue={orderDate}
           onChange={(event) => dispatch(setDate(event.target.value))}
         />
@@ -208,20 +335,18 @@ function Cart(props) {
           className="input"
           variant="outlined"
           defaultValue={orderTime}
-          label="זמן"
+          label={props.language ? "זמן" : "Time"}
           onChange={(event) => dispatch(setTime(event.target.value))}
         ></TextField>
         <TextField
           select
+          error={emptyField.menuName}
           className="input"
           variant="outlined"
-          label="תפריט"
+          label={props.language ? "תפריט" : "Menu"}
           value={menuType ? menuType.listValue : ""}
           onChange={setMenuType}
         >
-          {/* <MenuItem value={"classic"}>קלאסי</MenuItem>
-          <MenuItem value={"mefanek"}>מפנק</MenuItem>
-          <MenuItem value={"wealthy"}>עשיר</MenuItem> */}
           {menuTypes.map((type) => (
             <MenuItem value={type.listValue}>{type.listValue}</MenuItem>
           ))}
@@ -229,12 +354,15 @@ function Cart(props) {
         <TextField
           select
           className="input"
+          error={emptyField.eventType}
           variant="outlined"
-          label="סוג האירוח"
-          onChange={(event) => dispatch(setEventType(event.target.value))}
+          label="To Sit / TA?"
+          onChange={(event) =>
+            dispatch(setEventType(event.target.value), emptyFieldHandler(false))
+          }
         >
-          <MenuItem value={"toSit"}>לשבת</MenuItem>
-          <MenuItem value={"toGo"}>TA</MenuItem>
+          <MenuItem value={true}>לשבת</MenuItem>
+          <MenuItem value={false}>TA</MenuItem>
         </TextField>
       </Box>
       <Box className="cart-main">
@@ -249,7 +377,7 @@ function Cart(props) {
           >
             <Typography
               className="accordion-text"
-              sx={{ color: "text.secondary", width: "33%", fontWeight: "600" }}
+              sx={{ color: "text.secondary", width: "33%" }}
             >
               {props.language
                 ? kitchenItems + " פריטים "
@@ -257,7 +385,7 @@ function Cart(props) {
             </Typography>
             <Typography
               className="accordion-text"
-              sx={{ flexShrink: 0, fontWeight: "600", fontSize: "25px" }}
+              sx={{ flexShrink: 0, fontWeight: "600" }}
             >
               {props.language ? "מטבח" : "Kitchen"}
             </Typography>
@@ -302,7 +430,7 @@ function Cart(props) {
           >
             <Typography
               className="accordion-text"
-              sx={{ color: "text.secondary", width: "33%", fontWeight: "600" }}
+              sx={{ color: "text.secondary", width: "33%" }}
             >
               {props.language
                 ? bakeryItems + " פריטים "
@@ -343,7 +471,7 @@ function Cart(props) {
           >
             <Typography
               className="accordion-text"
-              sx={{ color: "text.secondary", fontWeight: "600" }}
+              sx={{ color: "text.secondary"}}
             >
               {props.language ? drinkItems + " פריטים " : drinkItems + " items"}
             </Typography>
@@ -438,11 +566,12 @@ function Cart(props) {
             </Typography>
           </AccordionSummary>
           <AccordionDetails className="accordion-details">
-            <Comment 
-            topic={'Topic'}
-            department={'Department'}
-            description={'Description'}
-            button={false}/>
+            <Comment
+              topic={"Topic"}
+              department={"Department"}
+              description={"Description"}
+              button={false}
+            />
             {comments.map((comment) => (
               <Comment
                 id={comment.id}
@@ -456,25 +585,23 @@ function Cart(props) {
         </Accordion>
       </Box>
       <Box className="cart-footer">
-        {/* width: "45%" */}
-
         <Button
           className="footer-button"
-          size="large"
           color="error"
           // disabled
           variant="outlined"
+          onClick={sendToOrdersList}
         >
-          {props.language ? "שלח להכנה" : "Send to Production"}
+          {props.language ? "להכנה" : "To Production List"}
         </Button>
 
         <Button
           className="footer-button"
-          size="large"
           color="warning"
           variant="outlined"
+          onClick={sendToWaitingList}
         >
-          {props.language ? "שלח לרשימת ההמתנה" : "Add to waiting list"}
+          {props.language ? "לרשימת ההמתנה" : "To Waiting list"}
         </Button>
 
         <Button
@@ -487,7 +614,7 @@ function Cart(props) {
           }}
           color="success"
           variant="outlined"
-          sx={{ fontSize: "20px", fontWeight: "800" }}
+          className="footer-button"
         >
           {props.language ? "הוסף פריט" : "Add item"}
         </Button>
@@ -497,18 +624,23 @@ function Cart(props) {
             props.menuState(false);
             props.orderInputState(false);
             props.commentState(true);
+            props.priceState(false);
           }}
           color="primary"
           variant="outlined"
-          sx={{ fontSize: "20px", fontWeight: "800" }}
+          className="footer-button"
         >
           {props.language ? " הוסף הערה " : "Add Comment"}
         </Button>
         <Box className="price-box">
-          <h3 style={{ margin: "3px" }}>
+          {/* <Typography
+           style={{ margin: "3px" }}>
             {props.language ? ": מחיר" : "Price :"}
-          </h3>
-          <h3 style={{ margin: "3px" }}>{price} ILS</h3>
+          </Typography> */}
+          <Typography 
+          style={{ margin: "3px" }}>
+            {price} ILS
+          </Typography>
           {/* <h3 style={{margin:'3px'}}> ILS </h3> */}
           <Button
             variant="outlined"
@@ -518,6 +650,7 @@ function Cart(props) {
               props.menuState(false);
               props.commentState(false);
             }}
+            className="footer-button"
           >
             {props.language ? "שינוי מחיר" : "Change Price"}
           </Button>

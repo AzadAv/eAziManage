@@ -27,11 +27,13 @@ function Footer(props) {
   };
 
   const menuItemsList = [
-    { value: "אירוע חדש", link: "/new-order" },
-    { value: "אירועים בהמתנה", link: "/waiting-list" },
-    { value: "אירועים בהכנה", link: '/'},
-    { value:"דוכן", link: '/eat-anu'},
-    { value:"הנהלה", link:'/management'},
+
+    { HeValue: "נחיתה",EnValue : 'Landing', link: "/" },
+    { HeValue: "אירוע חדש", EnValue : 'New Event', link: "/new-order" },
+    { HeValue: "אירועים בהמתנה",EnValue : 'Waiting List', link: "/waiting-list" },
+    { HeValue: "אירועים בהכנה", EnValue : 'Production List', link: '/production'},
+    // { value:"דוכן", link: '/eat-anu'},
+    { HeValue:"הנהלה", EnValue : 'Management',link:'/management'},
   ];
 
   const menuItems = menuItemsList.map((item) => (
@@ -45,7 +47,7 @@ function Footer(props) {
             display: "flex",
             justifyContent: "center",
           }}>   
-            {item.value}
+            {props.language ? item.HeValue : item.EnValue}
         </MenuItem>
       </NavLink>  
     </div>

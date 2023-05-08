@@ -11,10 +11,10 @@ function Navbar(props) {
     const [expanded, setExpanded] = React.useState(false);
 
     const tabs = [
-      { en: "Drinks", he: "שתייה" },
+      { en: 'drinks', he: "שתייה" },
       // { en: "Trays", he: "מגשי אירוח" },
-      { en: "Kitchen", he: "מטבח" },
-      { en: "Bakery", he: "מאפים" },
+      { en: 'kitchen', he: "מטבח" },
+      { en: 'bakery', he: "מאפים" },
 
     ];
   
@@ -24,17 +24,9 @@ function Navbar(props) {
 
     const setNavbarState = (event)=>{
 
-            console.log(event.en);
-            props.navbarState(event.en);
+            props.menuNavbarState(event.en);
     }
    
-    const tabsList = tabs.map((tab)=>(
-    
-        <Tab
-                label={props.language ? tab.he : tab.en}
-                style={{ fontSize: "15px", fontWeight: "700", color: "#000000" }}
-                onClick={()=>setNavbarState(tab)}
-              />))
   return (
     <div className='navbar-container'>
         
@@ -54,7 +46,13 @@ function Navbar(props) {
           aria-label="scrollable auto tabs example"
           
         >
-          {tabsList}
+        {  tabs.map((tab)=>(
+    
+          <Tab
+            label={props.language ? tab.he : tab.en}
+            style={{ fontSize: "15px", fontWeight: "700", color: "#000000" }}
+            onClick={()=>setNavbarState(tab)}
+          />))}
         </Tabs>
       </Box>
     </div>

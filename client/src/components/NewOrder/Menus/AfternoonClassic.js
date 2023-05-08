@@ -25,8 +25,8 @@ const AfternoonClassic = {
         },
         {
             id: 3,
-            enName: 'Tortillas',
-            heName: "טורטיות",
+            nameEn: 'Tortillas',
+            nameHe: "טורטיות",
             type: 'kitchen',
             quantity: 1
         },
@@ -46,59 +46,75 @@ const AfternoonClassic = {
         }, 
         {
             id:6,
-            enName: 'Capresa salad',
-            heName: 'סלט קפרזה',
+            nameEn: 'Capresa salad',
+            nameHe: 'סלט קפרזה',
             type: 'kitchen',
             quantity: 1
         },
         {
             id: 7,
-            enName: 'Carpachio with eggplants',
-            heName: "קרפצ'יו וחציל",
+            nameEn: 'Carpachio with eggplants',
+            nameHe: "קרפצ'יו וחציל",
             type: 'kitchen',
-            qunatity: 1
+            quantity: 1
         },
         {id: 8,
-            enName: 'Israeli vegetable salad',
-            heName: "סלט ירקות ישראלי",
+            nameEn: 'Israeli vegetable salad',
+            nameHe: "סלט ירקות ישראלי",
             type: 'kitchen',
-            qunatity: 1
+            quantity: 1
         },
         {
             id: 9,
-            enName: 'Green Salad',
-            heName: "סלט ירוק",
+            nameEn: 'Green Salad',
+            nameHe: "סלט ירוק",
             type: 'kitchen',
-            qunatity: 1
+            quantity: 1
         },
         {
             id: 10,
-            enName: 'Pasta with cream cheese and mushrooms',
-            heName: "פסטה ברוטב שמנת ופטריות",
+            nameEn: 'Pasta with cream cheese and mushrooms',
+            nameHe: "פסטה ברוטב שמנת ופטריות",
             type: 'kitchen',
-            qunatity: 1
+            quantity: 1
         },
         {
             id: 11,
-            enName: 'Noodles prepared with vegetables and tofu',
-            heName: "איטריות מוקפצות עם ירקות וטופו",
+            nameEn: 'Noodles prepared with vegetables and tofu',
+            nameHe: "איטריות מוקפצות עם ירקות וטופו",
             type: 'kitchen',
-            qunatity: 1
+            quantity: 1
         },
         {
             id: 12,
-            enName: 'Brownie pieces',
-           heName: 'חיתוכיות בראוני',
+            nameEn: 'Brownie pieces',
+            nameHe: 'חיתוכיות בראוני',
            type: 'bakery',
-           qunatity: 1
+           quantity: 1
         },
         {
             id:13,
-            enName: 'Puffs',
-           heName: 'פחזניות',
+            nameEn: 'Puffs',
+            nameHe: 'פחזניות',
            type: 'bakery',
-           qunatity: 1
+           quantity: 1
         },  
+        {
+            id:14,
+            nameEn: 'Cruncie pies',
+            nameHe: 'עוגות קראנץ',
+           type: 'bakery',
+           quantity: 1
+        }, 
+        {
+            id:15,
+            nameEn: 'Pies mountain',
+            nameHe: 'מגדל עוגיות צד',
+           type: 'bakery',
+           quantity: 1
+        }, 
 
     ]
 }
+
+export default AfternoonClassic;

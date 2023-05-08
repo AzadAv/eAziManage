@@ -52,8 +52,8 @@
 .comment-container {
 
     border: 1px solid black;
-    width: 30vw;
-    height: 50vh;
+    width: 50vw;
+    height: 70vh;
     padding: 1vh;
 
     display: flex;
@@ -100,4 +100,29 @@
 .none {
 
     display: none;
+}
+/* medium devices : tablet */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .comment-container {
+ 
+        width: 60vw;
+    }
+    }
+    .price-change-container {
+
+        width: 60vw;
+     }
+
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+
+.comment-container {
+
+    width: 80vw;
+}
+.price-change-container {
+
+    width: 80vw;
+ }
 }
