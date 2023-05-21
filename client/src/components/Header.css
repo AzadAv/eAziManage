@@ -1,0 +1,22 @@
+.headerContainer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* border: 1px solid black; */
+    /* height: 19vh; */
+
+}
+.header {
+
+    /* border: 1px solid black; */
+    width: 200px;
+    height: 100px;
+    z-index: 1;
+    border-radius: 7px;
+    background-image: url('../pics/eaziManageLogo.png');
+   
+    /* object-fit: cover; */
+    background-size: cover;
+}

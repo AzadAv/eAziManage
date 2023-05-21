@@ -1,0 +1,21 @@
+.comment-box {
+
+    width: 100%;
+    /* border: 1px solid black; */
+    /* height: 5vh; */
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.comment-box .item {
+
+    /* border: 1px solid black; */
+    padding: 1vh;
+    width: 25%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}

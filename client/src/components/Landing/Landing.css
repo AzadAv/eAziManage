@@ -1,0 +1,99 @@
+.landing-box {
+
+    width: 100vw;
+    height: 80vh;
+    padding-top: 2.5vh;
+    padding-bottom: 2.5vh;   
+    /* margin-top: 0.5vh; */
+    overflow: scroll;
+
+    /* border: 1px solid black; */
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(225,225,225,1) 0%, rgba(255,255,255,1) 62%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+.landing-box::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+/* #8bc34a green  #618833*/
+ 
+/* #00b0ff blue  #1c54b2*/
+
+/* #ff1744 red #b2102f */
+
+/* #ffc107  yellow #ffcd38*/
+
+/* #9c27b0 violet  #af52bf*/
+.icons-box {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1vh;
+    /* border: 1px solid rgb(0, 0, 0); */
+    width: 95%;
+    height: 19vh;
+    margin: 1vh;
+}
+.icon {
+
+    width: 13%;
+    height: 70%;
+    padding: 0.8%;
+    /* border: 0.5px solid ; */
+    border-radius: 50px;
+    transition: 0.1s ease-in-out;
+    background-color: white;
+}
+.icon.gray {
+
+    background-color: #E1E1E1
+}
+.icon:hover {
+
+    width: 14%;
+    height: 75%;
+    /* padding: 0.6%; */
+    cursor: pointer;
+}
+.icon:active {
+
+    width: 12%;
+    height: 65%;
+}
+.landing-header {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1vh;
+    height: 19vh;
+    margin: 1vh;
+    width: 95%;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 50px;
+    text-align: center;
+}
+
+.landing-secondary{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* border: 1px solid white; */
+    height: 19vh;
+    width: 100%;
+    padding: 1vh;
+    margin: 1vh;
+}

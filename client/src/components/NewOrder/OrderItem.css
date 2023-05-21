@@ -1,0 +1,68 @@
+.order-item {
+
+    width: 90%;
+    height: 35%;
+    margin-bottom: 25px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.order-item .picture-container {
+
+    /* border: 1px solid black; */
+
+    width: 30%;
+    min-width: 200px;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.order-item .picture-container .picture {
+
+/* border: 1px solid black; */
+background-size: cover;
+height: 170px;
+width: 200px;
+background-image: url('../../pics/Sandwiches.png');
+}
+.order-item .data-container {
+
+/* border: 1px solid black; */
+width: 70%;
+
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+}
+.order-item .data-container .Name {
+
+font-size: 23px;
+font-weight: 800;
+/* border:1px solid black; */
+}   
+.order-item .data-container .desc {
+
+font-size: 17px;
+font-weight: 400;
+/* border:1px solid black; */
+height: 48%;
+width: 95%;
+padding: 3px;
+text-align: center;
+
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.order-item .data-container .price {
+
+font-size: 25px;
+font-weight: 700;
+margin: 10px;
+color : #1976D2;
+/* border:1px solid black; */
+}

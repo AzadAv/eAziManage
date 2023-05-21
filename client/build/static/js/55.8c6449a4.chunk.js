@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkeazy_manage=self.webpackChunkeazy_manage||[]).push([[55],{5055:function(a,e,n){n.r(e),n.d(e,{default:function(){return t}});n(2791);var u=n(184);var t=function(){return(0,u.jsx)("div",{className:"Management"})}}}]);
+//# sourceMappingURL=55.8c6449a4.chunk.js.map

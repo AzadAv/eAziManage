@@ -1,0 +1,32 @@
+menu item {
+
+    nameEn
+    nameHe
+    amount
+    type
+functions :
+    add to event menu
+ 
+}
+event {
+
+    name
+    number of guests
+    type of guests
+    date
+    hour
+    menu type
+    items[]
+    comment
+}
+
+event item {
+
+    nameHe
+    nameEn
+    amount 
+    type
+    comment
+
+}
+

@@ -1,0 +1,14 @@
+.notification {
+
+    position: absolute;
+    /* right: 65%; */
+    top : 87vh;
+    z-index: 100;
+    /* width: 20%; */
+    /* border: 1px solid black; */
+    float: left;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+
+}
