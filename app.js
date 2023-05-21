@@ -16,5 +16,4 @@ app.use('/waiting-list',waitingListRoutes);
 mongoConnect(() =>{
 
     app.listen(7777);
-});
 })
