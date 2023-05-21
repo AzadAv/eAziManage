@@ -82,15 +82,15 @@ function Bakery(props) {
      tags:['bakery']},
      {
       id : 16,
-      nameEn: 'Zucchini balls',
-      nameHe: 'לביבות זוקיני',
+      enName: 'Zucchini balls',
+      heName: 'לביבות זוקיני',
       type: 'bakery',
       quantity: 1
   },  
     {
       id: 17,
-      nameEn:"Kishes",
-      nameHe:"קישים",
+      enName:"Kishes",
+      heName:"קישים",
       type: 'bakery',
       quantity : 1
     }

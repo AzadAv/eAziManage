@@ -10,7 +10,25 @@
 .waiting-list::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+.backdropW {
 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85vh;
+    z-index: 10;
+    background: rgba(6, 6, 6, 0.70);
+  
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
+    overflow: scroll;
+}
+.backdropW::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
 .waiting-list-header {
 
     font-size: 30px;
@@ -48,33 +66,41 @@
     /* border:1px solid rgb(211, 211, 211); */
     width: 100%;
     /* height: 300px; */
-    margin-bottom: 10px;
+    /* margin-bottom: 5px; */
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+   
 }
 .event-details-main {
 
     width: 100%;
     /* border: 1px solid black; */
-    margin-bottom: 20px;
+    /* margin-bottom: 5px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 .event-main-data-item {
 
     border:1px solid rgb(211, 211, 211);
     width: 100%;
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.list-item {
+
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
 }
 .comments{
 
@@ -131,6 +157,11 @@
     font-size: 17px;
     margin: 5px;
     height: 60px;
+}
+
+.none {
+
+    display: none;
 }
 
 /* For Mobile */

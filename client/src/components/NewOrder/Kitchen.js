@@ -163,7 +163,9 @@ function Kitchen(props) {
     <div className='kitchen'>
 
       {data.map((item) => (
+        <div >
         <MenuItem
+          
           name={props.language ? item.heName : item.enName}
           heName = {item.heName}
           enName = {item.enName}
@@ -172,7 +174,9 @@ function Kitchen(props) {
           deleteButton={false}
           language={props.language}
           quantity={1}
+          color={'rgb(140, 95, 185)'}
         />
+        </div>
       ))}
     </div>
   )

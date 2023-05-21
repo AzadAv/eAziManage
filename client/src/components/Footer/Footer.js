@@ -69,6 +69,7 @@ function Footer(props) {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        
       >
         <MenuIcon />
       </Button>

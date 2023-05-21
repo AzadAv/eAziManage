@@ -23,7 +23,7 @@ export const eventSlice = createSlice({
   reducers: {
     setName: (state, action) => {
       state.eventName = action.payload;
-      //    console.log(action.payload);
+         console.log(action.payload);
     },
     setGuestsNumber: (state, action) => {
       // console.log(action.payload);
@@ -148,9 +148,21 @@ export const eventSlice = createSlice({
     },
 
     cleanEvent: (state, action) => {
-      state.items = [];
+
+      state.eventName="";
+      state.guestsNum = 50;
+      state.guestsType = "";
+      state.orderDate = "2023-12-31";
+      state.orderTime = "13:00";
+      state.menuName = "";
+      state.eventType = null;
       state.price = 0;
-    },
+      state.items = [];
+      state.kitchenItemsAmount = 0;
+      state.bakeriesAmount = 0;
+      state.drinksAmount = 0;
+      state.comments=[];
+    }
 
   },
 });
@@ -170,6 +182,7 @@ export const {
   removeItem,
   cleanStore,
   addComment,
-  removeComment
+  removeComment,
+  cleanEvent
 } = eventSlice.actions;
 export default eventSlice.reducer;

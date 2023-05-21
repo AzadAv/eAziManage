@@ -40,9 +40,13 @@ import {
   setTime,
   setMenuName,
   setMenuItems,
+  cleanStore,
+  cleanEvent,
 } from "../../store/eventStore";
 import { addEvent } from "../../store/waitingListStore";
 import { addOrder } from "../../store/ordersListStore";
+import { sendWaitingListData } from "../../store/waiting-list-actions";
+import { showNotification } from "../../store/ui-slice";
 
 function Cart(props) {
   const dispatch = useDispatch();
@@ -65,6 +69,10 @@ function Cart(props) {
   const eventType = useSelector((state) => state.eventStoreReducer.eventType);
   const menuItems = useSelector((state) => state.eventStoreReducer.items);
   const comments = useSelector((state) => state.eventStoreReducer.comments);
+
+  const waitingList = useSelector(
+    (state) => state.waitingListStoreReducer.events
+  );
 
   const eventId = useSelector(
     (state) => state.waitingListStoreReducer.events.length
@@ -206,47 +214,96 @@ function Cart(props) {
 
   function sendToWaitingList() {
     if (checkInputs()) {
-      dispatch(
-        addEvent({
-          id: eventId,
-          eventName: eventName,
-          guestsNum: guestsNum,
-          guestsType: guestsType,
-          orderDate: orderDate,
-          orderTime: orderTime,
-          menuName: menuName,
-          eventType: eventType,
-          price: price,
-          items: menuItems,
-          comments: comments,
+      const tempEvent = {
+        name: eventName,
+        guestsNum: guestsNum,
+        guestsType: guestsType,
+        date: orderDate,
+        time: orderTime,
+        menu: menuName,
+        eventType: eventType,
+        price: price,
+        menuItems: menuItems,
+        comments: comments,
+      };
+
+      if (
+        dispatch(addEvent(tempEvent)) &&
+        dispatch(sendWaitingListData(tempEvent))
+      ) 
+      {
+        dispatch(
+          showNotification({
+            type: "success",
+            notification: "Event added to waiting list",
+          })
+        );
+        dispatch(cleanEvent());
+      } 
+      else {
+
+        dispatch(
+        showNotification({
+          type: "error",
+          notification: "Something went wrong with adding to waiting list",
         })
       );
-      console.log("Successully added to waiting list");
+      }
+
     } else {
-      console.log("Something went wrong with adding to waiting list");
+      
+      dispatch(
+        showNotification({
+          type: "error",
+          notification: "You have empty fields",
+        })
+      );
     }
   }
 
   function sendToOrdersList() {
     if (checkInputs()) {
-      console.log("Successully added to production list");
+
+      const tempEvent = {
+        id: ordersListId,
+        orderName: eventName,
+        guestsNum: guestsNum,
+        guestsType: guestsType,
+        orderDate: orderDate,
+        orderTime: orderTime,
+        menuName: menuName,
+        eventType: eventType,
+        items: menuItems,
+        comments: comments,
+        ready: false,
+      }
+      if(dispatch(addOrder(tempEvent))){
+
+        dispatch(
+          showNotification({
+            type: "success",
+            notification: "Event added to Production list",
+          })
+        );
+      }
+      else {
+
+        dispatch(
+          showNotification({
+            type: "error",
+            notification: "You have empty fields",
+          })
+        );
+      }
+    } 
+    else {
+
       dispatch(
-        addOrder({
-          id: ordersListId,
-          orderName: eventName,
-          guestsNum: guestsNum,
-          guestsType: guestsType,
-          orderDate: orderDate,
-          orderTime: orderTime,
-          menuName: menuName,
-          eventType: eventType,
-          items: menuItems,
-          comments: comments,
-          ready: false,
+        showNotification({
+          type: "error",
+          notification: "You have empty fields",
         })
       );
-    } else {
-      console.log("Something went wrong with adding to production list");
     }
   }
 
@@ -315,6 +372,13 @@ function Cart(props) {
           >
             <MenuItem value={"שגררות"}>שגררות</MenuItem>
             <MenuItem value={"חיילים"}>חיילים</MenuItem>
+            <MenuItem value={"גיל הזהב"}>גיל הזהב</MenuItem>
+            <MenuItem value={"תיירים"}>תיירים</MenuItem>
+            <MenuItem value={"אחמים"}>אחמים</MenuItem>
+            <MenuItem value={"אוניברסיטה"}>אוניברסיטה</MenuItem>
+            <MenuItem value={"אירוע פרטי"}>אירוע פרטי</MenuItem>
+            <MenuItem value={"חברות הייטק"}>חברות הייטק</MenuItem>
+            <MenuItem value={"מפיקים"}>מפיקים</MenuItem>
           </TextField>
         </FormControl>
         <InputLabel id="demo"></InputLabel>
@@ -471,7 +535,7 @@ function Cart(props) {
           >
             <Typography
               className="accordion-text"
-              sx={{ color: "text.secondary"}}
+              sx={{ color: "text.secondary" }}
             >
               {props.language ? drinkItems + " פריטים " : drinkItems + " items"}
             </Typography>
@@ -510,39 +574,7 @@ function Cart(props) {
                 />
               ))}
           </AccordionDetails>
-        </Accordion>
-        {/* <Accordion
-          expanded={expanded === "panel5"}
-          onChange={handleChange("panel5")}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel4bh-content"
-            id="panel4bh-header"
-          >
-            <Typography
-              className="accordion-text"
-              sx={{ color: "text.secondary", width: "33%", fontWeight: "600" }}
-            >
-              {props.language ? 0 + " פריטים " : 0 + " items"}
-            </Typography>
-             <Typography
-              className="accordion-text"
-              sx={{ color: "text.secondary", fontWeight: "600" }}
-            >
-            {props.language ? ("") : ("")}
-            </Typography> 
-            <Typography
-              className="accordion-text"
-              sx={{ flexShrink: 0, fontWeight: "600", fontSize: "25px" }}
-            >
-              {props.language ? "תוספות" : "Addings"}
-            </Typography>
-            
-          </AccordionSummary>
-          <AccordionDetails className="accordion-details"></AccordionDetails>
-        </Accordion> */}
-
+        </Accordion>   
         <Accordion
           expanded={expanded === "panel4"}
           onChange={handleChange("panel4")}
@@ -637,10 +669,7 @@ function Cart(props) {
            style={{ margin: "3px" }}>
             {props.language ? ": מחיר" : "Price :"}
           </Typography> */}
-          <Typography 
-          style={{ margin: "3px" }}>
-            {price} ILS
-          </Typography>
+          <Typography style={{ margin: "3px" }}>{price} ILS</Typography>
           {/* <h3 style={{margin:'3px'}}> ILS </h3> */}
           <Button
             variant="outlined"

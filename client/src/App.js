@@ -1,28 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { lazy, Suspense, useContext,useReducer } from 'react';
+import React, { lazy, Suspense,useEffect } from 'react';
 import { BrowserRouter as Router,Routes, Route} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-
-// import Orders from './components/Orders/Orders';
-// import NewOrder from './components/NewOrder/NewOrder';
-// import EatAnu from './components/eatAnu/EatAnu';
-// import Management from './components/Management/Management';
 import Footer from './components/Footer/Footer.js';
-// import WaitingList from './components/waitingList/WaitingList';
 import Product from './components/Orders/Product';
 import Landing from './components/Landing/Landing';
+import Notification from './components/UI/Notification';
+import { fetchWaitingListData, sendWaitingListData } from './store/waiting-list-actions';
 
 const Orders = lazy(() => import('./components/Orders/Orders'));
 const NewOrder = lazy(() => import('./components/NewOrder/NewOrder'));
 const WaitingList = lazy(() => import('./components/waitingList/WaitingList'));
 const Management = lazy(() => import('./components/Management/Management'));
+
+
 function App() {
 
+  const dispatch = useDispatch();
+
   const [language,languageHandler]=React.useState(true);
+  const waitingList =useSelector((state) => state.waitingListStoreReducer.events);
+
+
+  useEffect(() => {
+
+    dispatch(fetchWaitingListData());
+    
+  }, [dispatch]);
+
+
+
   return (
     <div className="App">
-      {/* <Header /> */}
+      <Notification language={language} />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>

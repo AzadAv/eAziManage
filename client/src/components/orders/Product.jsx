@@ -3,6 +3,8 @@ import "./Product.css";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { Grid, Box } from "@mui/material";
+// import { render, Document, Text } from 'redocx'
+// import { read, utils, writeFile } from 'xlsx';
 
 export default function Product(props) {
   const Item = styled(Paper)(({ theme }) => ({
@@ -12,6 +14,8 @@ export default function Product(props) {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+
+
 
   return (
     // 
@@ -50,6 +54,10 @@ export default function Product(props) {
           </Grid>
         </Grid>
       ))}
+      {/* <Document>
+        <Table headers={HEADERS} data={DATA} style={tableStyle} />
+      </Document> */}
+
     </Box>
   );
 }

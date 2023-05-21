@@ -57,10 +57,10 @@ function OrdersList(props) {
           </AccordionSummary>
 
           <AccordionDetails className="accordion-details">
-            <span className="time-left">
+            {/* <span className="time-left">
                 <span>{props.language ? ": נשאר זמן ":"Time Left :"}</span>
                 <Timer language={props.language} deadlineDate={order.orderDate} deadlineTime={order.orderTime}/>
-            </span>
+            </span> */}
             
             <Paper className="order-info">
               <Box className="box">

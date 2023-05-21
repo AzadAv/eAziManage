@@ -1,19 +1,42 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { sendWaitingListData } from "./waiting-list-actions";
+
+
 
 const initialState = {
 
+    
+// name
+// "Test"
+// guestsNum
+// "Test num"
+// guestsType
+// "Test guests type"
+// date
+// "Test date"
+// time
+// "Test time"
+// menu
+// "Test menu"
+// eventType
+// "Test type"
+// price
+// "Test price"
+
+// menuItems
+// Array
     events : [
         {
-         id: 0,   
-         eventName:"יום הראשון שלי בארומה",
+         name:"יום הראשון שלי בארומה",
          guestsNum: 50,
          guestsType: "students",
-         orderDate: "2017-01-12",
-         orderTime: "13:00",
-         menuName: "Afternoon Ashir",
+         date: "2017-01-12",
+         time: "13:00",
+         menu: "Afternoon Ashir",
          eventType:true,
          price:10000,
-         items:[
+         menuItems:[
             {
                 id : 0,
                 nameEn: "Lemonade",
@@ -41,8 +64,14 @@ const initialState = {
             topic: "Test",
             department: "Test Department",
             description: "Test Description"
-        }]}
-    ]
+        },
+        {   id: 1,
+            topic: "Test 2",
+            department: "Test Department 2",
+            description: "Test Description 2"
+        }
+    ]}
+    ],
 }
 
 export const waitingListSlice = createSlice({
@@ -51,16 +80,23 @@ export const waitingListSlice = createSlice({
     initialState,
     reducers : {
 
-        addEvent : (state,action ) => {
+        replaceWaitingListEvents : (state,action) => {
 
-            // console.log(action.payload);
+            state.events = action.payload;
+            // console.log(state.events);
+
+        },
+        addEvent : (state,action) => {
+
+          
             state.events = [...state.events,action.payload];
+            // console.log(state.events);
         },
         updateEvent : (state,action ) =>{},
         removeEvent: (state,action) => {
 
             console.log(action.payload);
-            state.events = state.events.filter((event) => event.id !== action.payload);
+            state.events = state.events.filter((event) => event._id !== action.payload);
         },
         sendEventByEmail: (state,action) => {},
         cleanEventList : (state,action) => {}

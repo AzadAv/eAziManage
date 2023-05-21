@@ -1,4 +1,4 @@
-import React ,{useState,useRef} from "react";
+import React, { useState, useRef } from "react";
 import "./MenuItem.css";
 import { useSelector, connect, useDispatch } from "react-redux";
 
@@ -13,29 +13,41 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { addItem,changeItemQuantity } from "../../store/eventStore";
+
+import { showNotification } from "../../store/ui-slice";
+import { addItem, changeItemQuantity } from "../../store/eventStore";
 function MenuItem(props) {
   const dispatch = useDispatch();
-  const itemsListLength = (useSelector((state) => state.eventStoreReducer.items)).length;
+  const itemsListLength = useSelector(
+    (state) => state.eventStoreReducer.items
+  ).length;
   // const addItem = dispatch(addItem);
-  const [itemQuantity,itemQuantityHandler] = useState(props.quantity);
-  
+  const [itemQuantity, itemQuantityHandler] = useState(props.quantity);
 
   const addButton = props.addButton ? (
-    <Button size="large" color="success" variant="contained"
-     onClick={() => {
-      
-      let tempQuantity = parseInt(itemQuantity);
-      dispatch(addItem(
-      {
-        id : itemsListLength,
-        nameEn : props.enName,
-        nameHe : props.heName,
-        type : props.type,
-        quantity : tempQuantity
-      }
-     ))}}
-     >
+    <Button
+      size="large"
+      color="success"
+      variant="contained"
+      onClick={() => {
+        let tempQuantity = parseInt(itemQuantity);
+        dispatch(
+          addItem({
+            id: itemsListLength,
+            nameEn: props.enName,
+            nameHe: props.heName,
+            type: props.type,
+            quantity: tempQuantity,
+          })
+        );
+        dispatch(
+          showNotification({
+            type: "success",
+            notification: tempQuantity+" " + props.enName + " added to order",
+          })
+        );
+      }}
+    >
       {props.language ? "הוסף" : "Add"}
     </Button>
   ) : (
@@ -68,19 +80,37 @@ function MenuItem(props) {
     </Box>
   );
 
+  const itemColor =
+    props.type === "drinks"
+      ? "aqua"
+      : props.type === "kitchen"
+      ? "rgb(140, 95, 185)"
+      : props.type === "bakery"
+      ? "rgb(255, 226, 179)"
+      : "";
+
+  const itemTextColor = 
+
+  props.type === "drinks"
+  ? "black"
+  : props.type === "kitchen"
+  ? "white"
+  : props.type === "bakery"
+  ? "black"
+  : "";
+
   return (
-    <Box className="menu-item">
-       {deleteButton}
-        {addButton}
+    <Box className="menu-item" sx={{ backgroundColor: itemColor }}>
+      {deleteButton}
+      {addButton}
       <CardActionArea className="main">
-        
         <CardContent className="content">
           {/* {commentBox} */}
           <Typography variant="body2" color="text.secondary">
             {props.price}
           </Typography>
           <Typography
-            sx={{ fontWeight: "600",fontSize:'17px' }}
+            sx={{ fontWeight: "600", fontSize: "17px", color: itemTextColor }}
             color="black"
             gutterBottom
             align="center"
@@ -90,19 +120,26 @@ function MenuItem(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        {props.addButton ? (<TextField
-          className="input"
-          id="standard-number"
-          label=" כמות"
-          type="number"
-          
-          variant="outlined"
-          value={itemQuantity}
-          onChange={(event)=>{ 
-            itemQuantityHandler(event.target.value);
+        {props.addButton ? (
+          <TextField
+            className="input"
+            id="standard-number"
+            label=" כמות"
+            type="number"
+            variant="outlined"
+            value={itemQuantity}
+            onChange={(event) => {
+              itemQuantityHandler(event.target.value);
             }}
-        />):""}
-       {props.addButton ? "" :(<Box className="quantity-box">{props.quantity}</Box>)}
+          />
+        ) : (
+          ""
+        )}
+        {props.addButton ? (
+          ""
+        ) : (
+          <Box className="quantity-box">{props.quantity}</Box>
+        )}
       </CardActions>
     </Box>
   );
