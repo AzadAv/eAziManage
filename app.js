@@ -16,4 +16,7 @@ app.use('/waiting-list',waitingListRoutes);
 mongoConnect(() =>{
 
     app.listen(7777);
+    app.listen(process.env.PORT || 7777, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 })
