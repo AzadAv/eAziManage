@@ -11,9 +11,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const waitingListRoutes = require('./routes/waitingListRoutes');
 
+// PORT
+const PORT = process.env.PORT || 7777;
 
 app.use('/waiting-list',waitingListRoutes);
 mongoConnect(() =>{
 
-    app.listen(7777);
+//     app.listen(7777);
+    app.listen(PORT, () =>
+  console.log(`Application is listening on port ${PORT}!`);
+);
 })
