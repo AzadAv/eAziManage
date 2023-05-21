@@ -19,6 +19,6 @@ mongoConnect(() =>{
 
 //     app.listen(7777);
     app.listen(PORT, () =>
-  console.log(`Application is listening on port ${PORT}!`);
+  console.log("Connected");
 );
 })
