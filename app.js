@@ -13,7 +13,20 @@ const waitingListRoutes = require('./routes/waitingListRoutes');
 
 
 app.use('/waiting-list',waitingListRoutes);
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// PORT
+const PORT = process.env.PORT || 7777;
+
+
 mongoConnect(() =>{
 
-    app.listen(7777);
+    // app.listen(7777);
+    app.listen(PORT, () => console.log("Connected to Heroku"));
 })
