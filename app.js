@@ -18,7 +18,5 @@ app.use('/waiting-list',waitingListRoutes);
 mongoConnect(() =>{
 
 //     app.listen(7777);
-    app.listen(PORT, () =>
-  console.log("Connected");
-);
+    app.listen(PORT, () => console.log("Connected"));
 })
