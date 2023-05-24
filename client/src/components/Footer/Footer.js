@@ -28,10 +28,10 @@ function Footer(props) {
 
   const menuItemsList = [
 
-    { HeValue: "נחיתה",EnValue : 'Landing', link: "/" },
-    { HeValue: "אירוע חדש", EnValue : 'New Event', link: "/new-order" },
-    { HeValue: "אירועים בהמתנה",EnValue : 'Waiting List', link: "/waiting-list" },
-    { HeValue: "אירועים בהכנה", EnValue : 'Production List', link: '/production'},
+    {id:0, HeValue: "נחיתה",EnValue : 'Landing', link: "/" },
+    {id:1, HeValue: "אירוע חדש", EnValue : 'New Event', link: "/new-order" },
+    {id:2, HeValue: "אירועים בהמתנה",EnValue : 'Waiting List', link: "/waiting-list" },
+    {id:3, HeValue: "אירועים בהכנה", EnValue : 'Production List', link: '/production'},
     // { value:"דוכן", link: '/eat-anu'},
     { HeValue:"הנהלה", EnValue : 'Management',link:'/management'},
   ];
@@ -41,6 +41,7 @@ function Footer(props) {
       <NavLink to={item.link} style={{textDecoration:'none'}}>
         <MenuItem
           onClick={handleClose}
+          key={item.id}
           style={{
             textAlign: "center",
             alignItems: "center",

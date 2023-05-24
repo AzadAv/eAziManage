@@ -9,11 +9,14 @@ import Product from './components/Orders/Product';
 import Landing from './components/Landing/Landing';
 import Notification from './components/UI/Notification';
 import { fetchWaitingListData, sendWaitingListData } from './store/waiting-list-actions';
-
-const Orders = lazy(() => import('./components/Orders/Orders'));
-const NewOrder = lazy(() => import('./components/NewOrder/NewOrder'));
-const WaitingList = lazy(() => import('./components/waitingList/WaitingList'));
-const Management = lazy(() => import('./components/Management/Management'));
+import Orders from './components/Orders/Orders';
+import NewOrder from './components/NewOrder/NewOrder';
+import WaitingList from './components/waitingList/WaitingList';
+import Management from './components/Management/Management';
+// const Orders = lazy(() => import('./components/Orders/Orders'));
+// const NewOrder = lazy(() => import('./components/NewOrder/NewOrder'));
+// const WaitingList = lazy(() => import('./components/waitingList/WaitingList'));
+// const Management = lazy(() => import('./components/Management/Management'));
 
 
 function App() {
