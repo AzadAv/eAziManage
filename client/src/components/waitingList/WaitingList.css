@@ -96,12 +96,12 @@
     justify-content: center;
     align-items: center;
 }
-.list-item {
+/* .list-item {
 
-    font-size: 20px;
+    font-size: 40px;
     font-weight: 600;
     color: black;
-}
+} */
 .comments{
 
     /* border: 1px solid black; */

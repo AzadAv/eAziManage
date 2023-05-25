@@ -1,7 +1,9 @@
 .footerContainer {
 
  
-    width: 100%;
+    width: 85vw;
+    padding-left: 7.5vw;
+    padding-right: 7.5vw;
     height: 15vh;
     position: fixed;
     top: 85vh;
@@ -26,8 +28,21 @@ justify-content: center;
 
     width: 10%;
     height: 50%;
+    margin-bottom:20px;
     display: flex;
     justify-content: center;
     align-items: center;
     /* border: 1px solid black; */
+}
+
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+
+    .footerContainer {
+
+        height : 13vh;
+        /* margin-bottom: ; */
+     }
+
 }

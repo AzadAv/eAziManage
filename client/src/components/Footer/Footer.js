@@ -63,7 +63,7 @@ function Footer(props) {
       <div style={{width:'80%'}}>
         <Header />
       </div>
-      <div style={{width:'10%'}}>
+      <div style={{width:'10%',marginBottom:'20px'}}>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}

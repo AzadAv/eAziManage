@@ -329,7 +329,7 @@ function Cart(props) {
           // inputRef={nameRef}
           variant="outlined"
           required={true}
-          defaultValue={eventName}
+          value={eventName}
           onChange={(event) =>
             dispatch(
               setName(event.target.value),
@@ -360,6 +360,7 @@ function Cart(props) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label={props.language ? "סוג הקהל" : "Type of Guests"}
+            value={guestsType}
             SelectProps={{
               renderValue: (value) => value,
             }}
@@ -449,7 +450,9 @@ function Cart(props) {
             </Typography>
             <Typography
               className="accordion-text"
-              sx={{ flexShrink: 0, fontWeight: "600" }}
+              // sx={{ flexShrink: 0,
+                //  fontWeight: "600"
+                //  }}
             >
               {props.language ? "מטבח" : "Kitchen"}
             </Typography>
@@ -596,6 +599,20 @@ function Cart(props) {
             >
               {props.language ? "הערות" : "Comments"}
             </Typography>
+            <Button
+          onClick={() => {
+            props.backdropHandler(true);
+            props.menuState(false);
+            props.orderInputState(false);
+            props.commentState(true);
+            props.priceState(false);
+          }}
+          color="primary"
+          variant="outlined"
+          className="footer-button"
+        >
+          {props.language ? " הוסף הערה " : "Add Comment"}
+        </Button>
           </AccordionSummary>
           <AccordionDetails className="accordion-details">
             <Comment
@@ -650,20 +667,7 @@ function Cart(props) {
         >
           {props.language ? "הוסף פריט" : "Add item"}
         </Button>
-        <Button
-          onClick={() => {
-            props.backdropHandler(true);
-            props.menuState(false);
-            props.orderInputState(false);
-            props.commentState(true);
-            props.priceState(false);
-          }}
-          color="primary"
-          variant="outlined"
-          className="footer-button"
-        >
-          {props.language ? " הוסף הערה " : "Add Comment"}
-        </Button>
+        
         <Box className="price-box">
           {/* <Typography
            style={{ margin: "3px" }}>

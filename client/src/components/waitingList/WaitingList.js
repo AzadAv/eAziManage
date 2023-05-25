@@ -75,6 +75,7 @@ function WaitingList(props) {
           // border:'10px solid black',
           height: "29.7cm",
           width: "21cm",
+          backgroundColor:'white'
         }}
       >
         <Accordion
@@ -103,7 +104,9 @@ function WaitingList(props) {
                 <span>{props.language ? "זמן" : "time"}</span>
                 {event.time}
               </Typography>
-              <Typography className="event-main-data-item">
+              <Typography
+               className="event-main-data-item"
+              >
               {event.name}
             </Typography>
               
@@ -262,11 +265,12 @@ function WaitingList(props) {
         {props.language ? "רשימת ההמתנה" : "Waiting List"}
       </Typography>
       <Box className={backdropState ? "backdropW" : "none"}>
-        {printEvent}</Box>
+        {printEvent}
+        </Box>
       {waitingList.map((event) => (
         <Accordion
-          expanded={expanded === "panel" + event._id}
-          onChange={handleChange("panel" + event._id)}
+          expanded={expanded === "panel" + event.name}
+          onChange={handleChange("panel" + event.name)}
           id="pdf"
           // ref={printRef}
           onClick={() => {
@@ -320,7 +324,9 @@ function WaitingList(props) {
                 {event.menu}
               </Typography>
             </Box>
-            <Box className="event-details-main">
+            <Box className="event-details-main"
+            
+            >
               <TableContainer component={Paper}>
                 <Typography
                   variant="h5"
@@ -346,14 +352,17 @@ function WaitingList(props) {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell className="list-item" align="center">
+                        <TableCell
+                          align="center"
+                          sx={{fontWeight:'600'}}>
                           {item.quantity}
                         </TableCell>
                         <TableCell
-                          className="list-item"
+                          // className="list-itemW"
                           align="center"
                           component="th"
                           scope="row"
+                          sx={{fontWeight:'700',fontSize:'22px'}}
                         >
                           {props.language ? item.nameHe : item.nameEn}
                         </TableCell>
