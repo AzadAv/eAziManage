@@ -109,7 +109,6 @@ function WaitingList(props) {
               >
               {event.name}
             </Typography>
-              
             <Typography className="event-main-data-item">
               {event.date}
             </Typography>
@@ -285,7 +284,7 @@ function WaitingList(props) {
           >
             <Button
               className="close-button-box"
-              onClick={() => removeEventFromList(event._id)}
+              // onClick={() => removeEventFromList(event._id)}
             >
               <HighlightOffOutlinedIcon
                 color="error"

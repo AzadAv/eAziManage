@@ -41,7 +41,8 @@ justify-content: center;
 
     .footerContainer {
 
-        height : 13vh;
+        height : 8vh;
+        top: 81vh;
         /* margin-bottom: ; */
      }
 

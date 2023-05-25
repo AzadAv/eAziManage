@@ -39,6 +39,7 @@ function App() {
     <div className="App">
       <Notification language={language} />
       <Router>
+        <Footer languageHandler={languageHandler} language={language}/>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             
@@ -51,7 +52,7 @@ function App() {
             {/* <Route path='/niran' element={<Product language={language}/>}/> */}
           </Routes>
         </Suspense> 
-      <Footer languageHandler={languageHandler} language={language}/>
+      
       </Router>
     </div>
   );
