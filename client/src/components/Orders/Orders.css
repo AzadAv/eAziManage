@@ -1,6 +1,6 @@
 .ordersContainer {
     width: 90vw;
-    height: 84vh;
+    height: 80vh;
     margin-top: 0.5vh;
 
     display: flex;
@@ -22,10 +22,10 @@
 
 /* medium devices : tablet */
 @media only screen and (min-width: 481px) and (max-width: 768px) {
-   .ordersContainer {
+   /* .ordersContainer { */
 
     /* border: 1px solid black; */
-   }
+   /* } */
    }
 
      /* For Mobile */
@@ -34,5 +34,6 @@
     .ordersContainer {
 
         /* border: 2px solid red; */
+        height: 77vh;
        }
  }

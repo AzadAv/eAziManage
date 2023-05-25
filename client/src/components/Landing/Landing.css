@@ -97,3 +97,12 @@
     padding: 1vh;
     margin: 1vh;
 }
+/* For Mobile */
+@media screen and (max-width: 540px) {
+
+    .landing-box {
+      
+        height: 77vh;
+        /* border: 1px solid black;  */
+     }
+ }

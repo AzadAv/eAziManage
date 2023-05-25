@@ -2,7 +2,7 @@
 
     /* border:1px solid rgb(0, 0, 0); */
     width: 90vw;
-    height: 84vh;
+    height: 80vh;
     margin-top: 0.5vh;
     overflow: scroll;
 }
@@ -166,6 +166,11 @@
 
 /* For Mobile */
 @media screen and (max-width: 540px) {
+
+    .waiting-list {
+
+        height: 77vh;
+    }
 
     .event-header-data-item {
     
