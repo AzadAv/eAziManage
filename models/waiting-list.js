@@ -69,7 +69,7 @@ class WaitingListEvent {
     .toArray()
     .then((waitingListItems) => {
 
-        console.log(waitingListItems);
+        // console.log(waitingListItems);
         return waitingListItems;
     })
     .catch((err) =>{

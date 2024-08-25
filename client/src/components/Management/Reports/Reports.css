@@ -1,0 +1,22 @@
+.management-reports {
+
+    /* border:1px solid red; */
+    width: 90vw;
+    height: 64vh;
+}
+
+.report-head {
+
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50vw;
+    /* padding: 1vw; */
+}
+
+#demo-simple-select {
+
+    width: 110px;
+    margin: 5px;
+}

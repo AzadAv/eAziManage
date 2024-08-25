@@ -1,0 +1,116 @@
+.management-events {
+
+    /* border: 1px solid yellow; */
+    width: 90vw;
+    height: 80vh;
+    margin-top: 0.5vh;
+    overflow: scroll;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.management-events::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.management-events .summary {
+
+    /* border: 1px solid black; */
+    font-size: 21px;
+    font-weight: 600;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.management-events .summary span {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 33%;
+    /* border: 1px solid black; */
+    /* padding: 5px; */
+}
+.management-events .add-info-box {
+
+    /* border: 1px solid black; */
+    margin: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.management-events .add-info-box .info-input{
+
+    min-width: 20%;
+}
+.management-event-list {
+
+    /* border: 1px solid black; */
+
+    /* width: 50%; */
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+.management-event-list .item {
+
+    /* border: 1px solid black; */
+    border-bottom: 1px solid rgb(200, 200, 200);
+    width: 50%;
+
+    font-size: 18px;
+    font-weight: 500;
+    margin: 3px;
+    padding: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.management-events .total-price-box {
+
+    /* border: 1px solid black; */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-direction: row;
+    justify-content:flex-end;
+    align-items: center;
+    padding: 3px;
+    margin: 5px;
+    margin-right: 12%;
+    font-size: 20px;
+    border-bottom: 2px solid black;
+}
+.management-events .total-price-box span{
+
+    margin: 5px;
+    font-weight: 600;
+    
+}
+/* For Mobile */
+@media screen and (max-width: 540px) {
+
+
+    .management-events .summary {
+
+        font-size: 15px;
+        /* font-weight: 400; */
+    }
+
+    .management-event-list .item {
+
+        font-size: 15px;
+        /* f */
+    }
+    .management-events .total-price-box {
+
+        font-size: 15px;
+        margin-right: 0%;
+    }
+}

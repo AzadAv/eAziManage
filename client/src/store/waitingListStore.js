@@ -84,7 +84,6 @@ export const waitingListSlice = createSlice({
 
             state.events = action.payload;
             // console.log(state.events);
-
         },
         addEvent : (state,action) => {
 

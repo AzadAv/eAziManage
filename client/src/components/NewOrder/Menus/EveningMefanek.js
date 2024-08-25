@@ -76,7 +76,7 @@ const EveningMefanek = {
         },
         {
             id: 10,
-            enName: 'Tortillas',
+            nameEn: 'Tortillas',
             nameHe: "טורטיות",
             type: 'kitchen',
             quantity : 1

@@ -9,6 +9,7 @@ const initialState = {
   menuName: "",
   eventType: null,
   price: 0,
+  pricePerPerson : 0,
   items: [],
   kitchenItemsAmount: 0,
   bakeriesAmount: 0,
@@ -32,6 +33,10 @@ export const eventSlice = createSlice({
     changePrice: (state, action) => {
       // console.log(action.payload);
       state.price = action.payload;
+    },
+    setPricePerPerson : (state,action) =>{
+
+      state.pricePerPerson = action.payload
     },
     setGuestsType: (state, action) => {
       // console.log(action.payload);
@@ -113,11 +118,11 @@ export const eventSlice = createSlice({
     },
     changeItemQuantity : (state,action) =>{
 
-      const item = state.items.find((item) => item.nameEn === action.payload.nameEn);
+      const item = state.items.find((item) => item.nameEn === action.payload.name);
       console.log(item);
       if(item){
       state.items = state.items.map((item) =>
-            item.nameEn === action.payload.nameEn 
+            item.nameEn === action.payload.name 
             ?{
                 ...item,
                 quantity: action.payload.quantity,
@@ -171,6 +176,7 @@ export const {
   setName,
   setGuestsNumber,
   changePrice,
+  setPricePerPerson,
   setGuestsType,
   setDate,
   setTime,

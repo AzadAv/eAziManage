@@ -1,0 +1,23 @@
+.string {
+
+    /* border: 1px solid black; */
+
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin: 0.2vw;
+    padding: 0.2vw;
+}
+
+
+
+.column {
+
+    padding: 0.3vw;
+    margin: 0.1vw;
+    width: 20%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}

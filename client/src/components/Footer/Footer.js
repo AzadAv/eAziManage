@@ -30,6 +30,7 @@ function Footer(props) {
 
     {id:0, HeValue: "נחיתה",EnValue : 'Landing', link: "/" },
     {id:1, HeValue: "אירוע חדש", EnValue : 'New Event', link: "/new-order" },
+    {id:2, HeValue: "לוח האירועים", EnValue : 'Dashboard', link: "/dashboard" },
     {id:2, HeValue: "אירועים בהמתנה",EnValue : 'Waiting List', link: "/waiting-list" },
     {id:3, HeValue: "אירועים בהכנה", EnValue : 'Production List', link: '/production'},
     // { value:"דוכן", link: '/eat-anu'},

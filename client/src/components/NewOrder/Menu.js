@@ -6,11 +6,12 @@ import { Box } from '@mui/material';
 
 function Menu(props) {
 
-    const Menu = useSelector((state)=> state.menuStoreReducer.menuItems);
-
+    // const Menu = useSelector((state)=> state.menuStoreReducer.menuItems);
+      const Menu = useSelector((state) =>state.manageStoreReducer.menuItems);
     const [items,itemsHandler] = useState();
 
 
+    console.log(Menu);
   return (
     <Box className='menu-box'>
         {Menu
@@ -27,9 +28,9 @@ function Menu(props) {
         .map((item)=>(
 
             <MenuItem
-          name={props.language ? item.nameHe : item.nameEn}
-          heName = {item.nameHe}
-          enName = {item.nameEn}
+          nameHe = {item.nameHe}
+          nameEn = {item.nameEn}
+          cost = {item.cost}
           type = {item.type}
           addButton={true}
           deleteButton={false}

@@ -12,7 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const waitingListRoutes = require('./routes/waitingListRoutes');
 app.use('/waiting-list',waitingListRoutes);
 
+const productionListRoutes = require('./routes/productionListRoutes');
+app.use('/production-list',productionListRoutes);
 // app.use(express.static(path.join(__dirname, 'client/build')));
+
+
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/management', adminRoutes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client/build')))
@@ -25,15 +31,10 @@ if (process.env.NODE_ENV === 'production') {
       res.send('API is running....')
     })
   }
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-// });
 
 
 // PORT
 const PORT = process.env.PORT || 7777;
-
-
 mongoConnect(() =>{
 
     // app.listen(7777);

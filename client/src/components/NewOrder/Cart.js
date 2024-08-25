@@ -42,14 +42,22 @@ import {
   setMenuItems,
   cleanStore,
   cleanEvent,
+  setPricePerPerson,
 } from "../../store/eventStore";
 import { addEvent } from "../../store/waitingListStore";
 import { addOrder } from "../../store/ordersListStore";
 import { sendWaitingListData } from "../../store/waiting-list-actions";
 import { showNotification } from "../../store/ui-slice";
+import { sendProductionListData } from "../../store/orders-list-actions";
 
 function Cart(props) {
   const dispatch = useDispatch();
+  const [backdrop, backdropHandler] = useState(false);
+  const [verifyText, verifyTextHandler] = useState(""
+    // props.language ? "רשימת ההמתנה" : "Waiting List"
+  );
+  const [toWaitingList, toWaitingListHandler] = useState(false);
+  const [toProductionList, toProductionListHandler] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [menuType, menuTypeHandler] = useState(null);
   const [emptyField, emptyFieldHandler] = useState({
@@ -57,6 +65,7 @@ function Cart(props) {
     guestsType: false,
     menuName: false,
     eventType: false,
+    price: true,
   });
 
   const eventName = useSelector((state) => state.eventStoreReducer.eventName);
@@ -70,22 +79,8 @@ function Cart(props) {
   const menuItems = useSelector((state) => state.eventStoreReducer.items);
   const comments = useSelector((state) => state.eventStoreReducer.comments);
 
-  const waitingList = useSelector(
-    (state) => state.waitingListStoreReducer.events
-  );
-
-  const eventId = useSelector(
-    (state) => state.waitingListStoreReducer.events.length
-  );
-
-  const ordersListId = useSelector(
-    (state) => state.ordersListStoreReducer.orders.length
-  );
-
   const drinkItems = menuItems.filter((item) => item.type === "drinks").length;
-  const kitchenItems = menuItems.filter(
-    (item) => item.type === "kitchen"
-  ).length;
+  const kitchenItems = menuItems.filter((item) => item.type === "kitchen").length;
   const bakeryItems = menuItems.filter((item) => item.type === "bakery").length;
 
   const menuTypes = [
@@ -151,6 +146,8 @@ function Cart(props) {
     },
   ];
 
+
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -158,11 +155,12 @@ function Cart(props) {
   function setMenuType(event) {
     menuTypes.filter((menu) => {
       if (menu.listValue === event.target.value) {
+
         menuTypeHandler(menu);
-        // emptyFieldHandler({menuName :false});
         dispatch(setMenuName(menu.listValue));
         dispatch(changePrice(guestsNum * menu.menu.pricePerPerson));
         dispatch(setMenuItems(menu.menu.items));
+        dispatch(setPricePerPerson(menu.price));
       }
     });
   }
@@ -186,11 +184,13 @@ function Cart(props) {
     let emptyGuestsType = guestsType === "";
     let emptyMenuName = menuName === "";
     let emptyEventType = eventType === null;
+    let zeroPrice = price === 0;
     let rightFormat = !(
       emptyName ||
       emptyGuestsType ||
       emptyMenuName ||
-      emptyEventType
+      emptyEventType ||
+      zeroPrice
     );
 
     if (rightFormat) {
@@ -201,6 +201,7 @@ function Cart(props) {
         guestsType: guestsType === "",
         menuName: menuName === "",
         eventType: eventType === null,
+        price: zeroPrice === 0,
       });
 
       console.log(eventName === "");
@@ -230,8 +231,7 @@ function Cart(props) {
       if (
         dispatch(addEvent(tempEvent)) &&
         dispatch(sendWaitingListData(tempEvent))
-      ) 
-      {
+      ) {
         dispatch(
           showNotification({
             type: "success",
@@ -239,19 +239,15 @@ function Cart(props) {
           })
         );
         dispatch(cleanEvent());
-      } 
-      else {
-
+      } else {
         dispatch(
-        showNotification({
-          type: "error",
-          notification: "Something went wrong with adding to waiting list",
-        })
-      );
+          showNotification({
+            type: "error",
+            notification: "Something went wrong with adding to waiting list",
+          })
+        );
       }
-
     } else {
-      
       dispatch(
         showNotification({
           type: "error",
@@ -263,9 +259,8 @@ function Cart(props) {
 
   function sendToOrdersList() {
     if (checkInputs()) {
-
       const tempEvent = {
-        id: ordersListId,
+        // id: ordersListId,
         orderName: eventName,
         guestsNum: guestsNum,
         guestsType: guestsType,
@@ -273,21 +268,22 @@ function Cart(props) {
         orderTime: orderTime,
         menuName: menuName,
         eventType: eventType,
+        price: price,
         items: menuItems,
         comments: comments,
         ready: false,
-      }
-      if(dispatch(addOrder(tempEvent))){
-
+      };
+      if (
+        dispatch(addOrder(tempEvent)) &&
+        dispatch(sendProductionListData(tempEvent))
+      ) {
         dispatch(
           showNotification({
             type: "success",
             notification: "Event added to Production list",
           })
         );
-      }
-      else {
-
+      } else {
         dispatch(
           showNotification({
             type: "error",
@@ -295,15 +291,27 @@ function Cart(props) {
           })
         );
       }
-    } 
-    else {
-
+    } else {
       dispatch(
         showNotification({
           type: "error",
           notification: "You have empty fields",
         })
       );
+    }
+  }
+
+  function sendToOneOfLists() {
+    if (toWaitingList && toProductionList === false) {
+      sendToWaitingList();
+      toWaitingListHandler(false);
+      toProductionListHandler(false);
+      backdropHandler(false);
+    } else if (toProductionList && toWaitingList === false) {
+      sendToOrdersList();
+      toWaitingListHandler(false);
+      toProductionListHandler(false);
+      backdropHandler(false);
     }
   }
 
@@ -319,8 +327,41 @@ function Cart(props) {
     (currentDay > 9 ? "-" : "-0") +
     currentDay;
 
+  const verifyUi = (
+    <Box className="verify-box">
+      <Typography variant="h5">
+        {props.language
+          ? " אתה בטוח שרוצה לשלוח את האירוע  ל" + verifyText + " ? "
+          : "Are you sure that you want to send Event to " + verifyText + " ? "}
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "space-around",
+        }}
+      >
+        <Button variant="outlined" color="success"
+         onClick={()=>sendToOneOfLists()}>
+          {props.language ? "כן" : "Yes"}
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => backdropHandler(false)}
+        >
+          {props.language ? "לא" : "No"}
+        </Button>
+      </Box>
+    </Box>
+  );
+
+  console.log(!localStorage.getItem('isAuth'));
+
   return (
     <Box className="order-cart">
+      <Box className={backdrop ? "backdrop" : "none"}>{verifyUi}</Box>
       <Box className="cart-header" elevation={3}>
         <TextField
           className="input"
@@ -450,24 +491,10 @@ function Cart(props) {
             </Typography>
             <Typography
               className="accordion-text"
-              // sx={{ flexShrink: 0,
-                //  fontWeight: "600"
-                //  }}
+              sx={{ flexShrink: 0, fontWeight: "600", fontSize: "25px" }}
             >
               {props.language ? "מטבח" : "Kitchen"}
             </Typography>
-            {/* <Button
-              onClick={() => {
-                props.backdropHandler(true);
-                props.menuState(true);
-                props.orderInputState(false);
-              }}
-              color="success"
-              variant="outlined"
-              sx={{ fontSize: "20px", fontWeight: "800" }}
-            >
-              {props.language ? "הוסף פריט" : "Add item"}
-            </Button> */}
           </AccordionSummary>
           <AccordionDetails className="accordion-details">
             {menuItems
@@ -475,7 +502,9 @@ function Cart(props) {
               .map((item) => (
                 <Item
                   id={item.id}
-                  name={props.language ? item.nameHe : item.nameEn}
+                  nameHe={item.nameHe}
+                  nameEn={item.nameEn}
+                  // name={props.language ? item.nameHe : item.nameEn}
                   price={item.price}
                   addButton={false}
                   deleteButton={true}
@@ -516,7 +545,8 @@ function Cart(props) {
               .map((item) => (
                 <Item
                   id={item.id}
-                  name={props.language ? item.nameHe : item.nameEn}
+                  nameHe={item.nameHe}
+                  nameEn={item.nameEn}
                   price={item.price}
                   quantity={item.quantity}
                   addButton={false}
@@ -567,7 +597,8 @@ function Cart(props) {
               .map((item) => (
                 <Item
                   id={item.id}
-                  name={props.language ? item.nameHe : item.nameEn}
+                  nameHe={item.nameHe}
+                  nameEn={item.nameEn}
                   price={item.price}
                   addButton={false}
                   deleteButton={true}
@@ -577,7 +608,7 @@ function Cart(props) {
                 />
               ))}
           </AccordionDetails>
-        </Accordion>   
+        </Accordion>
         <Accordion
           expanded={expanded === "panel4"}
           onChange={handleChange("panel4")}
@@ -600,19 +631,19 @@ function Cart(props) {
               {props.language ? "הערות" : "Comments"}
             </Typography>
             <Button
-          onClick={() => {
-            props.backdropHandler(true);
-            props.menuState(false);
-            props.orderInputState(false);
-            props.commentState(true);
-            props.priceState(false);
-          }}
-          color="primary"
-          variant="outlined"
-          className="footer-button"
-        >
-          {props.language ? " הוסף הערה " : "Add Comment"}
-        </Button>
+              onClick={() => {
+                props.backdropHandler(true);
+                props.menuState(false);
+                props.orderInputState(false);
+                props.commentState(true);
+                props.priceState(false);
+              }}
+              color="primary"
+              variant="outlined"
+              className="footer-button"
+            >
+              {props.language ? " הוסף הערה " : "Add Comment"}
+            </Button>
           </AccordionSummary>
           <AccordionDetails className="accordion-details">
             <Comment
@@ -637,19 +668,23 @@ function Cart(props) {
         <Button
           className="footer-button"
           color="error"
-          // disabled
+          disabled = {localStorage.getItem('isAuth')===null || localStorage.getItem('isAuth')==='false'}
           variant="outlined"
-          onClick={sendToOrdersList}
+          onClick={() => (toProductionListHandler(true), backdropHandler(true),
+            verifyTextHandler(props.langugae ? "רשימת ההכנה" : "Production List"))}
         >
           {props.language ? "להכנה" : "To Production List"}
         </Button>
 
         <Button
           className="footer-button"
+          disabled = {localStorage.getItem('isAuth')===null || localStorage.getItem('isAuth')==='false'}
           color="warning"
           variant="outlined"
-          onClick={sendToWaitingList}
+          onClick={() => (toWaitingListHandler(true), backdropHandler(true),
+            verifyTextHandler(props.language ? "רשימת ההמתנה" : "Waiting List"))}
         >
+          
           {props.language ? "לרשימת ההמתנה" : "To Waiting list"}
         </Button>
 
@@ -667,13 +702,20 @@ function Cart(props) {
         >
           {props.language ? "הוסף פריט" : "Add item"}
         </Button>
-        
+
         <Box className="price-box">
           {/* <Typography
            style={{ margin: "3px" }}>
             {props.language ? ": מחיר" : "Price :"}
           </Typography> */}
-          <Typography style={{ margin: "3px" }}>{price} ILS</Typography>
+          <Typography
+            style={{
+              margin: "3px",
+              color: emptyField.price ? "black" : "red",
+            }}
+          >
+            {price} ILS
+          </Typography>
           {/* <h3 style={{margin:'3px'}}> ILS </h3> */}
           <Button
             variant="outlined"

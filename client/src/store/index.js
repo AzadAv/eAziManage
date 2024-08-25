@@ -4,6 +4,7 @@ import menuStore from './menuStore';
 import ordersListStore from './ordersListStore';
 import uiSlice from './ui-slice';
 import waitingListStore from './waitingListStore';
+import manageStore from './manageStore';
 const store = configureStore({
 
     reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
         waitingListStoreReducer :waitingListStore,
         ordersListStoreReducer : ordersListStore,
         menuStoreReducer : menuStore,
+        manageStoreReducer : manageStore,
         uiSliceReducer : uiSlice,
     },
 })

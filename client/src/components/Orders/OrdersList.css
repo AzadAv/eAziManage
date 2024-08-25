@@ -8,6 +8,22 @@
 .orders-list-container::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+.backdrop {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85vh;
+    z-index: 10;
+    background: rgba(6, 6, 6, 0.70);
+  
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
+    overflow: scroll;
+}
 .Accordion {
 
     /* border: 1px solid black; */
@@ -119,7 +135,7 @@
 
     background-color: rgb(255, 226, 179);
 }
-.comment-box {
+.ordersList-comment-box {
 
     /* border: 1px solid black;  */
     width: 100%;
@@ -134,7 +150,7 @@
     font-size: 25px;
     font-weight: 600;
 }
-.comment-box .row {
+.ordersList-comment-box .row {
 
    
     font-size: 20px;

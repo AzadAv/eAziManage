@@ -17,6 +17,20 @@
 .order-cart::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+
+.verify-box {
+
+    width: 50vw;
+    height: 50vh;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .cart-header {
 
     width: 100%;
@@ -110,6 +124,11 @@
     .cart-header {
 
         flex-direction: column;
+    }
+    .cart-header .input {
+
+        width: 90%;
+        margin: 5px;
     }
 
     .cart-footer .footer-button {

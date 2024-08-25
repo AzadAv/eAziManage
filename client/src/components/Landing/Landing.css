@@ -17,6 +17,20 @@
 
 
 }
+.backdrop {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85vh;
+    z-index: 10;
+    background: rgba(6, 6, 6, 0.70);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .landing-box::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
@@ -30,6 +44,25 @@
 /* #ffc107  yellow #ffcd38*/
 
 /* #9c27b0 violet  #af52bf*/
+.landing-button-text {
+
+    font-size: 25px;
+    font-weight: 600;
+    /* width: 20%; */
+    margin: 2vw;
+}
+.login-box {
+
+    width: 40vw;
+    height: 70vh;
+    background-color: white;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
 .icons-box {
 
     display: flex;
@@ -88,7 +121,7 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     
     /* border: 1px solid white; */
@@ -97,6 +130,20 @@
     padding: 1vh;
     margin: 1vh;
 }
+
+.none {
+
+    display: none;
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+    .login-box {
+        width: 80vw;
+    }
+}
+
+
 /* For Mobile */
 @media screen and (max-width: 540px) {
 
@@ -105,4 +152,12 @@
         height: 77vh;
         /* border: 1px solid black;  */
      }
+    .login-box {
+
+        width: 90vw;
+    }
+    .landing-button-text {
+
+        font-size: 15px;
+    }
  }

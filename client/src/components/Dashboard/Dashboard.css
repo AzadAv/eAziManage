@@ -1,0 +1,102 @@
+.dashboard {
+
+    
+    /* border: 0.5px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 90vw;
+    height: 84vh;
+    margin-top: 0.5vh;
+}
+.dashboard-head {
+
+    width: 97%;
+    height: 25vh;
+    /* border: 1px solid black; */
+    margin: 3px;
+    padding: 3px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.until-date {
+
+    width: 14vw;
+    /* border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard-main {
+
+    width: 97%;
+    /* border: 1px solid black; */
+    margin: 3px;
+    padding: 3px;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+.day {
+
+    margin: 2px;
+    width: 16.6%;
+    height: 25vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(159, 255, 159);
+    /* rgb(0, 161, 0) */
+    /* rgb(83, 228, 83) */
+    /* rgb(112, 225, 112) */
+    /* rgb(159, 255, 159) */
+}
+.dashboard-footer {
+
+    /* border: 1px solid black; */
+}
+.dashboard-button-text {
+
+    /* margin: 1px; */ 
+    font-size: 25px;
+    font-weight: 600;
+
+}
+/* For Mobile */
+@media screen and (max-width: 768px) {
+
+    .dashboard-head {
+
+        height: 15vh;
+    }
+    .dashboard-main {
+
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        /* border: 1px solid black; */
+        height: 62vh;
+        overflow: scroll;
+    }
+    .dashboard-main::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
+    
+    .day {
+
+        margin: 2px;
+        width: 50%;
+        /* height: 70vh; */
+    }
+    .dashboard-button-text{
+
+        font-size: 15px;
+    }
+    }

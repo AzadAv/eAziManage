@@ -36,34 +36,41 @@ const initialState = {
           },
           {
             id : 5,
-            nameEn: "Water with cucumbers",
-            nameHe: "מים עם מלפפון",
-            type: 'drinks',
-          },
-          {
+            nameEn : "Beer",
+            nameHe : "בירה",
+            type : 'drinks',
+            quantity : 1
+           },
+           {
+
             id : 6,
-            nameEn: "Lemonade",
-            nameHe: "לימונדה",
-            type: 'drinks',
-          },
-          {
+            nameEn : "Orange juice",
+            nameHe : "מיץ תפוזים",
+            type : 'drinks',
+            quantity : 1
+           },
+           {
             id : 7,
-            nameEn: "Stand of hot drinks",
-            nameHe: "עמדת שתייה חמה",
-            type: 'drinks',
-          },
-          {
+            nameEn : "Espresso Bar",
+            nameHe : "עמדת אספרסו בר",
+            type : "drinks",
+            quantity : 1
+           },
+           {
             id : 8,
-            nameEn: "Red Wine",
-            nameHe: "יין אדום",
-            type: 'drinks',
-          },
-          {
+            nameEn : "Tray of half sandwiches",
+            nameHe : "מגש של חצי כריכים",
+            type : 'kitchen',
+            quantity : 1
+           },
+           {
+
             id : 9,
-            nameEn: "White Wine",
-            nameHe: "יין לבן",
-            type: 'drinks', 
-          },
+            nameEn : "Tray of mini sandwiches",
+            nameHe : "מגש של מיני סנדוויצ'ים",
+            type : 'kitchen',
+            quantity : 1
+           },
           {
             id: 10,
             nameEn: 'Plate of vegetables',
@@ -255,7 +262,7 @@ const initialState = {
             quantity : 1,},
            {
             id:40,
-            nameEn: 'Cruncie pies',
+            nameEn: 'Crunchie pies',
             nameHe: 'עוגות קראנץ',
             type: 'bakery',
             tags:['bakery','ready']}, 
@@ -345,7 +352,9 @@ const initialState = {
             nameHe:"קישים",
             type: 'bakery',
             quantity : 1
-           }
+           },
+          
+           
     ]
 }
 

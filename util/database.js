@@ -1,7 +1,10 @@
 const mongodb =require('mongodb');
 const MongoClient = mongodb.MongoClient;
-const uri = "mongodb+srv://Azad:aqilaydin@cluster0.pxvfa.mongodb.net/eaziManage?retryWrites=true&w=majority";
-
+// const uri = "mongodb+srv://Azad:aqilaydin@cluster0.pxvfa.mongodb.net/eaziManage?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Azad:aqilaydin@cluster0.pkd4d1i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// mongodb+srv://Azad:aqilaydin@cluster0.pkd4d1i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+// mongodb+srv://Azad:aqilaydin@cluster0.pkd4d1i.mongodb.net/?retryWrites=true&w=majority
+//mongodb://localhost:27017
 let _db;
 
 const mongoConnect = (callback) =>{

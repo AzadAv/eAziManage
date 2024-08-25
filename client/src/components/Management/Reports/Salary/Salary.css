@@ -1,0 +1,67 @@
+.reports-salary {
+
+    /* border: 1px solid black; */
+    /* width: 90vw;
+    height: 64vh; */
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.top {
+
+    /* border:1px solid green; */
+    width: 90vw;
+    height: 12vh;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.top-box {
+
+    /* border: 1px solid red; */
+    margin: 0.3vw;
+    width: 29vw;
+    padding: 0.5vw;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+.center {
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 90vw;
+    height: 40vh;
+    /* border: 1px solid saddlebrown; */
+}
+
+.bruto {
+
+    width: 45vw;
+    height: 38vh;
+    /* border: 1px solid khaki; */
+    margin: 0.3vw;
+    overflow: scroll;
+}
+.bruto::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.taxes {
+
+    width: 45vw;
+    height: 38vh;
+    /* border: 1px solid rgb(121, 117, 79); */
+    margin: 0.3vw;
+}
+
+.bottom {
+
+    height: 12vh;
+    width: 90vw;
+    border: 1px solid black;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+  import React, { useEffect, useState } from "react";
 import "./WaitingList.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -27,24 +27,41 @@ import Comment from "../NewOrder/Comment";
 import { deleteEventFromWaitingList, sendWaitingListData } from "../../store/waiting-list-actions";
 import Fab from "@mui/material/Fab";
 import CloseIcon from "@mui/icons-material/Close";
+import { sendProductionListData } from "../../store/orders-list-actions";
+import { showNotification } from "../../store/ui-slice";
+import { addOrder } from "../../store/ordersListStore";
 let isInitial = true;
 function WaitingList(props) {
-  const printRef = React.useRef();
 
+  const printRef = React.useRef();
   const dispatch = useDispatch();
+
   const waitingList = useSelector(
     (state) => state.waitingListStoreReducer.events
   );
 
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    if(localStorage.getItem('isAuth')==='true'){
+
+      setExpanded(isExpanded ? panel : false);
+    }
+    else {
+
+      dispatch(
+        showNotification({
+          type: "error",
+          notification: "You need to Sign Up",
+        })
+      );
+    }
+    
   };
 
   const [pdfEvent, pdfEventHandler] = useState();
   const [backdropState, backdropStateHandler] = useState();
-
-  console.log(pdfEvent);
+  const [verify,verifyHandler] = useState(false);
+  const [idNum,idNumHandler]=useState(0);
 
   const createPDF = async () => {
     const element = printRef.current;
@@ -56,14 +73,9 @@ function WaitingList(props) {
     const imgProperties = pdf.getImageProperties(data);
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-
+    
     pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-    // for (var i=0; i <= 2;i++){
-
-    //   pdf.addPage(pdfWidth.toString(), pdfHeight.toString());
-
-    // }
     pdf.save("print.pdf");
   };
 
@@ -106,6 +118,7 @@ function WaitingList(props) {
               </Typography>
               <Typography
                className="event-main-data-item"
+              sx={{fontSize:'25px',fontWeight:'600'}}
               >
               {event.name}
             </Typography>
@@ -155,7 +168,9 @@ function WaitingList(props) {
                           {props.language ? item.nameHe : item.nameEn}
                         </TableCell>
                         <TableCell className="list-item" align="center">
-                          {item.id+1}
+                          {/* {item.id+1} */}
+                          {/* {idNum+1} */}
+                          {/* {idNumHandler(idNum+1)} */}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -257,15 +272,54 @@ function WaitingList(props) {
     }
   }
 
-  // console.log(tempArray);
+  function sendToProductionList(event) {
+
+    console.log(event);
+
+      const tempEvent = {
+      
+        orderName: event.name,
+        guestsNum: event.guestsNum,
+        guestsType: event.guestsType,
+        orderDate: event.date,
+        orderTime: event.time,
+        menuName: event.menu,
+        eventType: event.eventType,
+        price : event.price,
+        items: event.menuItems,
+        comments: event.comments,
+        ready: false,
+      }
+      if(
+        dispatch(sendProductionListData(tempEvent)) &&
+        dispatch(addOrder(tempEvent))
+      ){
+
+        dispatch(
+          showNotification({
+            type: "success",
+            notification: "Event added to Production list",
+          })
+        );
+      }
+      else {
+
+        dispatch(
+          showNotification({
+            type: "error",
+            notification: "You have empty fields",
+          })
+        );
+      }
+}
+
   return (
     <Paper className="waiting-list" elevation={5}>
-      <Typography className="waiting-list-header" align="center" variant="h4">
+      <div 
+      className="waiting-list-header">
         {props.language ? "רשימת ההמתנה" : "Waiting List"}
-      </Typography>
-      <Box className={backdropState ? "backdropW" : "none"}>
-        {printEvent}
-        </Box>
+      </div>
+      
       {waitingList.map((event) => (
         <Accordion
           expanded={expanded === "panel" + event.name}
@@ -273,10 +327,14 @@ function WaitingList(props) {
           id="pdf"
           // ref={printRef}
           onClick={() => {
-            generateMenu(event);
+           
+              generateMenu(event);
             pdfEventHandler(event._id);
+            
+            
           }}
         >
+
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
@@ -284,10 +342,12 @@ function WaitingList(props) {
           >
             <Button
               className="close-button-box"
-              // onClick={() => removeEventFromList(event._id)}
+              disabled = {localStorage.getItem('isAuth')===null || localStorage.getItem('isAuth')==='false'}
+              variant="outlined"
+              onClick={() => removeEventFromList(event._id)}
             >
               <HighlightOffOutlinedIcon
-                color="error"
+                color={localStorage.getItem('isAuth')===true ?"error":"inherit"}
                 fontSize="large"
               ></HighlightOffOutlinedIcon>
             </Button>
@@ -295,7 +355,10 @@ function WaitingList(props) {
             <Typography className="event-header-data-item">
               {event.date}
             </Typography>
-            <Typography className="event-header-data-item">
+            <Typography 
+            className="event-header-data-item"
+            sx ={{fontWeight:'600'}}
+            >
               {event.name}
             </Typography>
             <Typography className="event-header-data-item">
@@ -411,6 +474,9 @@ function WaitingList(props) {
               size="large"
               color="primary"
               variant="contained"
+              onClick = {()=> 
+                (backdropStateHandler(true),verifyHandler(true))
+              }
             >
               {props.language ? "שלח להכנה" : "Send to production"}
             </Button>
@@ -420,10 +486,13 @@ function WaitingList(props) {
               size="large"
               color="primary"
               variant="contained"
-              onClick={() => backdropStateHandler(true)}
+              onClick={() =>
+                ( backdropStateHandler(true),verifyHandler(false))
+                }
             >
               {props.language ? "הוריד PDF" : "Download pdf"}
             </Button>
+
             <Button
               className="footer-button"
               size="large"
@@ -433,6 +502,7 @@ function WaitingList(props) {
             >
               {props.language ? "שלח למוזיאון" : "Send to museum"}
             </Button>
+
             <Button
               className="footer-button"
               size="large"
@@ -443,6 +513,40 @@ function WaitingList(props) {
               {props.language ? "הוריד אקסל" : "Download Excel"}
             </Button>
           </Box>
+        <Box className={backdropState ? "backdropW" : "none"}>
+        {verify ? "": printEvent}
+        {verify ? 
+        (
+        <Box className="verify-box" sx={{marginTop:'20vh'}}>
+    <Typography variant="h5">
+      {props.language
+        ? " אתה בטוח שרוצה לשלוח את האירוע  לרשימת ההכנה ? "
+        : "Are you sure that you want to send Event to Production List"}
+    </Typography>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-around",
+      }}
+    >
+      <Button variant="outlined" color="success"
+       onClick={()=>(sendToProductionList(event),backdropStateHandler(false))}
+       >
+        {props.language ? "כן" : "Yes"}
+      </Button>
+      <Button
+        variant="outlined"
+        color="error"
+        onClick={() => backdropStateHandler(false)}
+      >
+        {props.language ? "לא" : "No"}
+      </Button>
+    </Box>
+        </Box>
+        ) : ""}
+      </Box>  
         </Accordion>
       ))}
     </Paper>

@@ -34,8 +34,9 @@ function MenuItem(props) {
         dispatch(
           addItem({
             id: itemsListLength,
-            nameEn: props.enName,
-            nameHe: props.heName,
+            nameEn: props.nameEn,
+            nameHe: props.nameHe,
+            cost : props.cost,
             type: props.type,
             quantity: tempQuantity,
           })
@@ -43,7 +44,7 @@ function MenuItem(props) {
         dispatch(
           showNotification({
             type: "success",
-            notification: tempQuantity+" " + props.enName + " added to order",
+            notification: tempQuantity+" " + props.nameEn + " added to order",
           })
         );
       }}
@@ -115,7 +116,7 @@ function MenuItem(props) {
             gutterBottom
             align="center"
           >
-            {props.name}
+            {props.language ? props.nameHe : props.nameEn}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -138,7 +139,20 @@ function MenuItem(props) {
         {props.addButton ? (
           ""
         ) : (
-          <Box className="quantity-box">{props.quantity}</Box>
+          <TextField
+            className="input"
+            id="standard-number"
+            label=" כמות"
+            type="number"
+            variant="outlined"
+            value={props.quantity}
+            onChange={(event) => {
+              dispatch(changeItemQuantity({
+                name : props.nameEn,
+                quantity : parseInt(event.target.value)
+              }))
+            }}
+          />
         )}
       </CardActions>
     </Box>

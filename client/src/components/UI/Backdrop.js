@@ -1,8 +1,11 @@
 import React from 'react'
 import "./Backdrop.css"
-function Backdrop() {
+function Backdrop(props) {
   return (
-    <div className='backdrop'>Backdrop</div>
+    <div className='backdrop'
+    >
+        {props.children}
+    </div>
   )
 }
 

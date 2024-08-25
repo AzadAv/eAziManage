@@ -1,5 +1,36 @@
 .Management {
  
+    width: 95vw;
+    height: 84vh;
+    margin-top: 0.5vh;
+
+    /* border: 1px solid black; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.Management::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.manage-header {
+
+    font-size: 30px;
+    font-weight: 1000;
+    color: #AE2C32;
+}
+
+.manage-main {
+
+    /* border: 1px solid black; */
     width: 100%;
-    border: 1px solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }

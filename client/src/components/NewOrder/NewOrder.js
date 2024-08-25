@@ -28,7 +28,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { showNotification } from "../../store/ui-slice";
-import { addComment, changePrice } from "../../store/eventStore";
+import {
+  addComment,
+  changePrice,
+  setPricePerPerson,
+} from "../../store/eventStore";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -58,10 +62,14 @@ function NewOrder(props) {
   ).length;
 
   const eventPrice = useSelector((state) => state.eventStoreReducer.price);
+  const pricePerPerson = useSelector(
+    (state) => state.eventStoreReducer.pricePerPerson
+  );
+  const guestsNum = useSelector((state) => state.eventStoreReducer.guestsNum);
   const [newPrice, newPriceHandler] = useState();
 
   function setNewPrice() {
-    dispatch(changePrice(newPrice));
+    // dispatch(changePrice(newPrice));
     priceStateHandler(false);
     backdropStateHandler(false);
   }
@@ -117,7 +125,7 @@ function NewOrder(props) {
         /> */}
         <TextField
           id="outlined-search"
-          label={props.language ? "חפש פריט":"Search Item"}
+          label={props.language ? "חפש פריט" : "Search Item"}
           type="search"
           onChange={(event) => navbarStateHandler(event.target.value)}
         />
@@ -153,16 +161,24 @@ function NewOrder(props) {
       <Typography variant="h5">
         {props.language ? "שינוי מחיר" : "Price Change"}
       </Typography>
-      <Typography>
-        {props.language ? "מחיר קיים" : "Existing Price"} :{eventPrice}
-        {props.language ? " שח " : " ILS "}
-      </Typography>
+      <TextField
+        id="standard-number"
+        label={props.language ? "מחיר פאר אדם" : "Price per person"}
+        value={pricePerPerson}
+        type="number"
+        variant="outlined"
+        onChange={(event) => {
+          dispatch(setPricePerPerson(event.target.value));
+          dispatch(changePrice(event.target.value * guestsNum));
+        }}
+      />
       <TextField
         id="standard-number"
         label={props.language ? "מחיר חדש" : "new price"}
         type="number"
         variant="outlined"
-        onChange={(event) => newPriceHandler(event.target.value)}
+        value={eventPrice}
+        onChange={(event) => dispatch(changePrice(event.target.value))}
       />
       <Button
         variant="outlined"
